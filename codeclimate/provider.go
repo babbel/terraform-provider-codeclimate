@@ -7,8 +7,8 @@ import (
 
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
-		ResourcesMap: map[string]*schema.Resource{
-			"codeclimate_repository": resourceRepository(),
+		DataSourcesMap: map[string]*schema.Resource{
+			"codeclimate_repository": dataSourceRepository(),
 		},
 	}
 }
