@@ -1,29 +1,23 @@
 package codeclimate
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 )
 
-type ReadRepositoryResponse struct {
-	Data struct {
-		ID         string `json:"id"`
-		Attributes struct {
-			TestReporterID string `json:"test_reporter_id"`
-		} `json:"attributes"`
-	} `json:"data"`
+const codeClimateApiHost string = "https://api.codeclimate.com/v1"
+
+type Client struct {
+	apiKey string
 }
 
-func getRepository(apiKey string, repoId string) (interface{}, error) {
-	var repositoryData ReadRepositoryResponse
-
-	// TODO: Extract into a client
+// TODO: Extend in the future to accept POST requests
+func (c *Client) makeRequest(path string) ([]byte, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/repos/%s", codeClimateApiHost, repoId), nil)
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", codeClimateApiHost, path), nil)
 
 	if err != nil {
 		log.Println(err)
@@ -31,7 +25,7 @@ func getRepository(apiKey string, repoId string) (interface{}, error) {
 	}
 
 	req.Header.Add("Accept", `W/"application/vnd.api+json"`)
-	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", apiKey))
+	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", c.apiKey))
 
 	resp, err := client.Do(req)
 
@@ -48,11 +42,5 @@ func getRepository(apiKey string, repoId string) (interface{}, error) {
 		return nil, err
 	}
 
-	err = json.Unmarshal(data, &repositoryData)
-	if err != nil {
-		log.Println(err)
-		return nil, err
-	}
-
-	return repositoryData, nil
+	return data, nil
 }

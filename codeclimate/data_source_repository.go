@@ -6,10 +6,6 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-const (
-	codeClimateApiHost = "https://api.codeclimate.com/v1"
-)
-
 func dataSourceRepository() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRepositoryRead,
@@ -27,9 +23,9 @@ func dataSourceRepository() *schema.Resource {
 	}
 }
 
-func dataSourceRepositoryRead(d *schema.ResourceData, m interface{}) error {
+func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 	repositoryId := d.Get("repository_id").(string)
-	repositoryData, err := getRepository(m.(Config).apiKey, repositoryId)
+	repositoryData, err := getRepository(client.(Client), repositoryId)
 	if err != nil {
 		log.Println(err)
 		return err

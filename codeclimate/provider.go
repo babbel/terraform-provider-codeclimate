@@ -5,10 +5,6 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-type Config struct {
-	apiKey string
-}
-
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
@@ -26,9 +22,9 @@ func Provider() terraform.ResourceProvider {
 }
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
-	config := Config{
+	client := Client{
 		apiKey: d.Get("api_key").(string),
 	}
 
-	return config, nil
+	return client, nil
 }
