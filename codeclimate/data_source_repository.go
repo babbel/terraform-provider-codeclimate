@@ -14,7 +14,6 @@ const (
 	codeClimateApiHost = "https://api.codeclimate.com/v1"
 )
 
-// It's not the full structure, here is descibed only the part we require.
 type ReadRepositoryResponse struct {
 	Data struct {
 		ID         string `json:"id"`
@@ -44,6 +43,7 @@ func dataSourceRepository() *schema.Resource {
 func dataSourceRepositoryRead(d *schema.ResourceData, m interface{}) error {
 	var repositoryData ReadRepositoryResponse
 
+	// TODO: Extract into a client
 	client := &http.Client{}
 	repoId := d.Get("repository_id").(string)
 
@@ -65,20 +65,23 @@ func dataSourceRepositoryRead(d *schema.ResourceData, m interface{}) error {
 	}
 
 	defer resp.Body.Close()
-	data, _ := ioutil.ReadAll(resp.Body)
+	data, err := ioutil.ReadAll(resp.Body)
+
+	if err != nil {
+		log.Println(err)
+		return err
+	}
 
 	err = json.Unmarshal(data, &repositoryData)
-	log.Printf("The id is: %s", repositoryData.Data.Attributes.TestReporterID)
-	log.Printf("Repdata: %s", repositoryData)
 
-	log.Printf("%s", data)
+	if err != nil {
+		log.Println(err)
+		return err
+	}
 
 	d.SetId(repositoryData.Data.ID)
 	// TODO: Check that repositoryData.Data.Attributes.TestReporterID exists
 	d.Set("test_reporter_id", repositoryData.Data.Attributes.TestReporterID)
-	log.Printf("The test_reporter_id is: %s", d.Get("test_reporter_id").(string))
-	if err != nil {
-		return err
-	}
+
 	return err
 }
