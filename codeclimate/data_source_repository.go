@@ -12,7 +12,6 @@ import (
 
 const (
 	codeClimateApiHost = "https://api.codeclimate.com/v1"
-	token              = "dummy"
 )
 
 // It's not the full structure, here is descibed only the part we require.
@@ -56,7 +55,7 @@ func dataSourceRepositoryRead(d *schema.ResourceData, m interface{}) error {
 	}
 
 	req.Header.Add("Accept", `W/"application/vnd.api+json"`)
-	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", token))
+	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", m.(Config).apiKey))
 
 	resp, err := client.Do(req)
 
