@@ -3,7 +3,6 @@ package codeclimate
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 )
 
@@ -20,7 +19,6 @@ func (c *Client) makeRequest(path string) ([]byte, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", codeClimateApiHost, path), nil)
 
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 
@@ -30,7 +28,6 @@ func (c *Client) makeRequest(path string) ([]byte, error) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 
@@ -38,7 +35,6 @@ func (c *Client) makeRequest(path string) ([]byte, error) {
 	data, err := ioutil.ReadAll(resp.Body)
 
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 

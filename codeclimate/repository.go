@@ -3,7 +3,6 @@ package codeclimate
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 )
 
 // The structure describes just what we need from the response.
@@ -23,13 +22,11 @@ func getRepository(client Client, repoId string) (interface{}, error) {
 	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))
 
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 
 	err = json.Unmarshal(data, &repositoryData)
 	if err != nil {
-		log.Println(err)
 		return nil, err
 	}
 

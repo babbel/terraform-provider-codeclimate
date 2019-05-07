@@ -1,8 +1,6 @@
 package codeclimate
 
 import (
-	"log"
-
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -27,7 +25,6 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 	repositoryId := d.Get("repository_id").(string)
 	repositoryData, err := getRepository(client.(Client), repositoryId)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 
