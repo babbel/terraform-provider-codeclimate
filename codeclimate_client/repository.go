@@ -1,4 +1,4 @@
-package codeclimate
+package codeclimate_client
 
 import (
 	"encoding/json"
@@ -21,7 +21,7 @@ type readRepositoryResponse struct {
 	} `json:"data"`
 }
 
-func getRepository(client Client, repoId string) (interface{}, error) {
+func (client *Client) GetRepository(repoId string) (interface{}, error) {
 	var repositoryData readRepositoryResponse
 
 	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))

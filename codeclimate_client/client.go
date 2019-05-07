@@ -1,4 +1,4 @@
-package codeclimate
+package codeclimate_client
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 const codeClimateApiHost string = "https://api.codeclimate.com/v1"
 
 type Client struct {
-	apiKey string
+	ApiKey string
 }
 
 // TODO: Extend in the future to accept POST requests
@@ -23,7 +23,7 @@ func (c *Client) makeRequest(path string) ([]byte, error) {
 	}
 
 	req.Header.Add("Accept", "application/vnd.api+json")
-	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", c.apiKey))
+	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", c.ApiKey))
 
 	resp, err := client.Do(req)
 

@@ -1,6 +1,7 @@
 package codeclimate
 
 import (
+	"github.com/babbel/terraform-provider-codeclimate/codeclimate_client"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -22,8 +23,8 @@ func Provider() terraform.ResourceProvider {
 }
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
-	client := Client{
-		apiKey: d.Get("api_key").(string),
+	client := codeclimate_client.Client{
+		ApiKey: d.Get("api_key").(string),
 	}
 
 	return client, nil
