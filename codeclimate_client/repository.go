@@ -21,18 +21,18 @@ type readRepositoryResponse struct {
 	} `json:"data"`
 }
 
-func (client *Client) GetRepository(repoId string) (interface{}, error) {
+func (client *Client) GetRepository(repoId string) (Repository, error) {
 	var repositoryData readRepositoryResponse
 
 	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))
 
 	if err != nil {
-		return nil, err
+		return Repository{}, err
 	}
 
 	err = json.Unmarshal(data, &repositoryData)
 	if err != nil {
-		return nil, err
+		return Repository{}, err
 	}
 
 	repository := Repository{

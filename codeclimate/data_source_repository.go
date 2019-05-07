@@ -31,8 +31,8 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 		return err
 	}
 
-	d.SetId(repositoryData.(codeclimate_client.Repository).Id)
-	d.Set("test_reporter_id", repositoryData.(codeclimate_client.Repository).TestReporterId)
+	d.SetId(repositoryData.Id)
+	d.Set("test_reporter_id", repositoryData.TestReporterId)
 
 	return err
 }
