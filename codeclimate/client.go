@@ -22,7 +22,7 @@ func (c *Client) makeRequest(path string) ([]byte, error) {
 		return nil, err
 	}
 
-	req.Header.Add("Accept", `W/"application/vnd.api+json"`)
+	req.Header.Add("Accept", "application/vnd.api+json")
 	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", c.apiKey))
 
 	resp, err := client.Do(req)
