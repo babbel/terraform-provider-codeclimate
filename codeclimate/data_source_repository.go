@@ -28,9 +28,8 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 		return err
 	}
 
-	d.SetId(repositoryData.(ReadRepositoryResponse).Data.ID)
-	// TODO: Check that repositoryData.Data.Attributes.TestReporterID exists
-	d.Set("test_reporter_id", repositoryData.(ReadRepositoryResponse).Data.Attributes.TestReporterID)
+	d.SetId(repositoryData.(Repository).Id)
+	d.Set("test_reporter_id", repositoryData.(Repository).TestReporterId)
 
 	return err
 }

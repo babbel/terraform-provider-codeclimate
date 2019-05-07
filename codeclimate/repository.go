@@ -5,9 +5,14 @@ import (
 	"fmt"
 )
 
+type Repository struct {
+	Id             string
+	TestReporterId string
+}
+
 // The structure describes just what we need from the response.
 //  For the full description look at: https://developer.codeclimate.com/?shell#get-repository
-type ReadRepositoryResponse struct {
+type readRepositoryResponse struct {
 	Data struct {
 		ID         string `json:"id"`
 		Attributes struct {
@@ -17,7 +22,7 @@ type ReadRepositoryResponse struct {
 }
 
 func getRepository(client Client, repoId string) (interface{}, error) {
-	var repositoryData ReadRepositoryResponse
+	var repositoryData readRepositoryResponse
 
 	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))
 
@@ -30,5 +35,10 @@ func getRepository(client Client, repoId string) (interface{}, error) {
 		return nil, err
 	}
 
-	return repositoryData, nil
+	repository := Repository{
+		Id:             repositoryData.Data.ID,
+		TestReporterId: repositoryData.Data.Attributes.TestReporterID,
+	}
+
+	return repository, nil
 }
