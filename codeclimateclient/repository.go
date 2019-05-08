@@ -35,10 +35,10 @@ func (client *Client) GetRepository(repoId string) (*Repository, error) {
 		return nil, err
 	}
 
-	repository := Repository{
+	repository := &Repository{
 		Id:             repositoryData.Data.ID,
 		TestReporterId: repositoryData.Data.Attributes.TestReporterID,
 	}
 
-	return &repository, nil
+	return repository, nil
 }
