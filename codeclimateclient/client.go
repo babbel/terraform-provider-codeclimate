@@ -6,8 +6,6 @@ import (
 	"net/http"
 )
 
-const codeClimateApiHost string = "https://api.codeclimate.com/v1"
-
 type Client struct {
 	ApiKey  string
 	BaseUrl string
@@ -16,10 +14,6 @@ type Client struct {
 // TODO: Extend in the future to accept POST requests
 func (c *Client) makeRequest(path string) ([]byte, error) {
 	client := &http.Client{}
-
-	if c.BaseUrl == "" {
-		c.BaseUrl = codeClimateApiHost
-	}
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", c.BaseUrl, path), nil)
 

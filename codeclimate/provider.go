@@ -6,6 +6,8 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+const codeClimateApiHost string = "https://api.codeclimate.com/v1"
+
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
@@ -24,7 +26,8 @@ func Provider() terraform.ResourceProvider {
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
 	client := codeclimateclient.Client{
-		ApiKey: d.Get("api_key").(string),
+		ApiKey:  d.Get("api_key").(string),
+		BaseUrl: codeClimateApiHost,
 	}
 
 	return client, nil
