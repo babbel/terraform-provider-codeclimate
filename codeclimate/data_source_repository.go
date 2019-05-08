@@ -26,13 +26,13 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 	repositoryId := d.Get("repository_id").(string)
 
 	c := client.(codeclimate_client.Client)
-	repositoryData, err := c.GetRepository(repositoryId)
+	repository, err := c.GetRepository(repositoryId)
 	if err != nil {
 		return err
 	}
 
-	d.SetId(repositoryData.Id)
-	d.Set("test_reporter_id", repositoryData.TestReporterId)
+	d.SetId(repository.Id)
+	d.Set("test_reporter_id", repository.TestReporterId)
 
-	return err
+	return nil
 }
