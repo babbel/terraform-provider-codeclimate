@@ -9,14 +9,19 @@ import (
 const codeClimateApiHost string = "https://api.codeclimate.com/v1"
 
 type Client struct {
-	ApiKey string
+	ApiKey  string
+	BaseUrl string
 }
 
 // TODO: Extend in the future to accept POST requests
 func (c *Client) makeRequest(path string) ([]byte, error) {
 	client := &http.Client{}
 
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", codeClimateApiHost, path), nil)
+	if c.BaseUrl == "" {
+		c.BaseUrl = codeClimateApiHost
+	}
+
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/%s", c.BaseUrl, path), nil)
 
 	if err != nil {
 		return nil, err
