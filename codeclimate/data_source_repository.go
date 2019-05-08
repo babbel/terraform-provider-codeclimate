@@ -1,7 +1,7 @@
 package codeclimate
 
 import (
-	"github.com/babbel/terraform-provider-codeclimate/codeclimate_client"
+	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -25,7 +25,7 @@ func dataSourceRepository() *schema.Resource {
 func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 	repositoryId := d.Get("repository_id").(string)
 
-	c := client.(codeclimate_client.Client)
+	c := client.(codeclimateclient.Client)
 	repository, err := c.GetRepository(repositoryId)
 	if err != nil {
 		return err
@@ -34,5 +34,5 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 	d.SetId(repository.Id)
 	d.Set("test_reporter_id", repository.TestReporterId)
 
-	return nil
+	return err
 }

@@ -1,4 +1,4 @@
-package codeclimate_client
+package codeclimateclient
 
 import (
 	"fmt"

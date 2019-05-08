@@ -1,4 +1,4 @@
-package codeclimate_client
+package codeclimateclient
 
 import (
 	"encoding/json"
@@ -21,18 +21,18 @@ type readRepositoryResponse struct {
 	} `json:"data"`
 }
 
-func (client *Client) GetRepository(repoId string) (Repository, error) {
+func (client *Client) GetRepository(repoId string) (*Repository, error) {
 	var repositoryData readRepositoryResponse
 
 	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))
 
 	if err != nil {
-		return Repository{}, err
+		return nil, err
 	}
 
 	err = json.Unmarshal(data, &repositoryData)
 	if err != nil {
-		return Repository{}, err
+		return nil, err
 	}
 
 	repository := Repository{
@@ -40,5 +40,5 @@ func (client *Client) GetRepository(repoId string) (Repository, error) {
 		TestReporterId: repositoryData.Data.Attributes.TestReporterID,
 	}
 
-	return repository, nil
+	return &repository, nil
 }
