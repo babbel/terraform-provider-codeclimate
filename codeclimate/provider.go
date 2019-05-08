@@ -1,13 +1,31 @@
 package codeclimate
 
 import (
+	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
 	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform/terraform"
 )
 
-func Provider() *schema.Provider {
+func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
-		ResourcesMap: map[string]*schema.Resource{
-			"codeclimate_repository": resourceRepository(),
+		Schema: map[string]*schema.Schema{
+			"api_key": &schema.Schema{
+				Type:        schema.TypeString,
+				Required:    true,
+				Description: "Token for the CodeClimate API.",
+			},
 		},
+		DataSourcesMap: map[string]*schema.Resource{
+			"codeclimate_repository": dataSourceRepository(),
+		},
+		ConfigureFunc: configureProvider,
 	}
+}
+
+func configureProvider(d *schema.ResourceData) (interface{}, error) {
+	client := codeclimateclient.Client{
+		ApiKey: d.Get("api_key").(string),
+	}
+
+	return client, nil
 }
