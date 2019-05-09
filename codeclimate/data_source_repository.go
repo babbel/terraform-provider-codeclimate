@@ -10,11 +10,15 @@ func dataSourceRepository() *schema.Resource {
 		Read: dataSourceRepositoryRead,
 
 		Schema: map[string]*schema.Schema{
-			"repository_id": &schema.Schema{
+			"repository_slug": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"test_reporter_id": {
+			"repository_id": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"test_reporter_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -23,10 +27,10 @@ func dataSourceRepository() *schema.Resource {
 }
 
 func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
-	repositoryId := d.Get("repository_id").(string)
+	repositorySlug := d.Get("repository_slug").(string)
 
 	c := client.(codeclimateclient.Client)
-	repository, err := c.GetRepository(repositoryId)
+	repository, err := c.GetRepository(repositorySlug)
 	if err != nil {
 		return err
 	}
