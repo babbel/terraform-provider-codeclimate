@@ -13,7 +13,7 @@ type Repository struct {
 // The structure describes just what we need from the response.
 //  For the full description look at: https://developer.codeclimate.com/?shell#get-repository
 type readRepositoryResponse struct {
-	Data struct {
+	Data []struct {
 		ID         string `json:"id"`
 		Attributes struct {
 			TestReporterID string `json:"test_reporter_id"`
@@ -21,10 +21,10 @@ type readRepositoryResponse struct {
 	} `json:"data"`
 }
 
-func (client *Client) GetRepository(repoId string) (*Repository, error) {
+func (client *Client) GetRepository(repositorySlug string) (*Repository, error) {
 	var repositoryData readRepositoryResponse
 
-	data, err := client.makeRequest(fmt.Sprintf("/repos/%s", repoId))
+	data, err := client.makeRequest(fmt.Sprintf("repos?github_slug=%s", repositorySlug))
 
 	if err != nil {
 		return nil, err
@@ -35,9 +35,11 @@ func (client *Client) GetRepository(repoId string) (*Repository, error) {
 		return nil, err
 	}
 
+	// TODO: check size of data
+
 	repository := &Repository{
-		Id:             repositoryData.Data.ID,
-		TestReporterId: repositoryData.Data.Attributes.TestReporterID,
+		Id:             repositoryData.Data[0].ID,
+		TestReporterId: repositoryData.Data[0].Attributes.TestReporterID,
 	}
 
 	return repository, nil
