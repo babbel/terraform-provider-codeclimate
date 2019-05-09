@@ -14,10 +14,6 @@ func dataSourceRepository() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"repository_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
 			"test_reporter_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
