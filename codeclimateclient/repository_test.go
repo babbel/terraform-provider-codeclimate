@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	repositoryId           = "5b6abdc65b6abdc65b6abdc6"
+	repositorySlug         = "lessonnine/testarepo"
 	expectedTestReporterId = "0c89092bc2c088d667612ddd1a992ec62f643ded331f40783bcf6b847561234d"
 )
 
@@ -15,15 +15,17 @@ func TestGetId(t *testing.T) {
 	teardown := setup()
 	defer teardown()
 
-	handURL := fmt.Sprintf("/repos/%s", repositoryId)
+	mux.HandleFunc("/repos", func(w http.ResponseWriter, r *http.Request) {
+		if r.FormValue("github_slug") != repositorySlug {
+			t.Fatal(fmt.Errorf("received slug doesn match `%s`", repositorySlug))
+		}
 
-	mux.HandleFunc(handURL, func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		fmt.Fprint(w, getFixture("repositories/repository.json"))
 	})
 
-	repository, err := client.GetRepository(repositoryId)
+	repository, err := client.GetRepository(repositorySlug)
 
 	if err != nil {
 		t.Fatal(err)
