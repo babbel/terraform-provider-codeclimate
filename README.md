@@ -68,7 +68,7 @@ $ go test ./...
 
 Github Releases
 ---------------------------
-In order to push a release to Github the feature branch has to merged into master and then a tag needs to be created with the version name of the provider e.g. **v0.0.1** and pushed.
+In order to push a release to Github the feature branch has to be merged into master and then a tag needs to be created with the version name of the provider e.g. **v0.0.1** and pushed.
 
 ```sh
 git checkout master
