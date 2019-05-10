@@ -35,7 +35,14 @@ func (client *Client) GetRepository(repositorySlug string) (*Repository, error) 
 		return nil, err
 	}
 
-	// TODO: check size of data
+	numberOfReposFound := len(repositoryData.Data)
+
+	if numberOfReposFound != 1 {
+		return nil, fmt.Errorf(
+			"The response for %s returned %v repositories (should have been 1)",
+			repositorySlug, numberOfReposFound,
+		)
+	}
 
 	repository := &Repository{
 		Id:             repositoryData.Data[0].ID,
