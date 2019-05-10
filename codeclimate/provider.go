@@ -30,5 +30,5 @@ func configureProvider(d *schema.ResourceData) (interface{}, error) {
 		BaseUrl: codeClimateApiHost,
 	}
 
-	return client, nil
+	return &client, nil
 }

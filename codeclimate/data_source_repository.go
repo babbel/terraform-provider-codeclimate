@@ -25,7 +25,7 @@ func dataSourceRepository() *schema.Resource {
 func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 	repositorySlug := d.Get("repository_slug").(string)
 
-	c := client.(codeclimateclient.Client)
+	c := client.(*codeclimateclient.Client)
 	repository, err := c.GetRepository(repositorySlug)
 	if err != nil {
 		return err
