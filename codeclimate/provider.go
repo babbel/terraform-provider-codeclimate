@@ -20,6 +20,9 @@ func Provider() terraform.ResourceProvider {
 		DataSourcesMap: map[string]*schema.Resource{
 			"codeclimate_repository": dataSourceRepository(),
 		},
+		ResourcesMap: map[string]*schema.Resource{
+			"codeclimate_repository": resourceRepository(),
+		},
 		ConfigureFunc: configureProvider,
 	}
 }

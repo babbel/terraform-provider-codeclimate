@@ -51,3 +51,12 @@ func (client *Client) GetRepository(repositorySlug string) (*Repository, error) 
 
 	return repository, nil
 }
+
+func (client *Client) CreateRepository(organizationId string, repositoryUrl string) (*Repository, error) {
+	repository := &Repository{
+		Id:             "repositoryData.Data[0].ID",
+		TestReporterId: "repositoryData.Data[0].Attributes.TestReporterID",
+	}
+
+	return repository, nil
+}
