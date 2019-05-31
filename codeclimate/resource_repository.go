@@ -7,7 +7,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-const lessonnineGithubApiHost string = "https://github.com/lessonnine/"
+const lessonnineGithubApiHost string = "https://github.com/"
 
 func resourceRepository() *schema.Resource {
 	return &schema.Resource{
