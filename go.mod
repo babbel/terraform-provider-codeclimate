@@ -1,3 +1,5 @@
 module github.com/babbel/terraform-provider-codeclimate
 
-require github.com/hashicorp/terraform v0.11.13
+go 1.13
+
+require github.com/hashicorp/terraform v0.12.8

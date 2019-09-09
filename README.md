@@ -9,8 +9,8 @@ Terraform CodeClimate Provider
 Requirements
 ------------
 
-- [Terraform](https://www.terraform.io/downloads.html) 0.11.13+
-- [Go](https://golang.org/doc/install) 1.11.x+ (to build the provider plugin)
+- [Terraform](https://www.terraform.io/downloads.html) 0.12.x+
+- [Go](https://golang.org/doc/install) 1.13.x+ (to build the provider plugin)
 
 Building The Provider
 ---------------------
@@ -47,7 +47,7 @@ data "codeclimate_repository" "test" {
 Developing the Provider
 ---------------------------
 
-If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.11.x+ is *required*). This provider works using Go Modules.
+If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.13.x+ is *required*). This provider works using Go Modules.
 
 To compile the provider, run `go build -o terraform-provider-codeclimate`. This will build the provider and put the provider binary in the current directory.
 
