@@ -32,7 +32,7 @@ func dataSourceRepositoryRead(d *schema.ResourceData, client interface{}) error 
 	}
 
 	d.SetId(repository.Id)
-	d.Set("test_reporter_id", repository.TestReporterId)
+	err = d.Set("test_reporter_id", repository.TestReporterId)
 
 	return err
 }
