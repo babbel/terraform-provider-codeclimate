@@ -10,11 +10,11 @@ func dataSourceRepository() *schema.Resource {
 		Read: dataSourceRepositoryRead,
 
 		Schema: map[string]*schema.Schema{
-			"repository_slug": &schema.Schema{
+			"repository_slug": {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"test_reporter_id": &schema.Schema{
+			"test_reporter_id": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},

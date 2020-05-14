@@ -11,7 +11,7 @@ const codeClimateApiHost string = "https://api.codeclimate.com/v1"
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"api_key": &schema.Schema{
+			"api_key": {
 				Type:        schema.TypeString,
 				Required:    true,
 				Description: "Token for the CodeClimate API.",
