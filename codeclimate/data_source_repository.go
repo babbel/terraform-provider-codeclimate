@@ -2,7 +2,7 @@ package codeclimate
 
 import (
 	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func dataSourceRepository() *schema.Resource {

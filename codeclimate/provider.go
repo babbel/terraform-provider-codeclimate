@@ -2,8 +2,8 @@ package codeclimate
 
 import (
 	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
-	"github.com/hashicorp/terraform/helper/schema"
-	"github.com/hashicorp/terraform/terraform"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 )
 
 const codeClimateApiHost string = "https://api.codeclimate.com/v1"
