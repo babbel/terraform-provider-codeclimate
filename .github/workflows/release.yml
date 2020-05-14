@@ -30,8 +30,10 @@ jobs:
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
-    - name: install tooling
+
+    - name: install tools
       run: make tools
+
     - name: sanity-check
       run: |
         make fmt

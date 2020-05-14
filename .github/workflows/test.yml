@@ -29,7 +29,7 @@ jobs:
             dep ensure
         fi
 
-    - name: install tooling
+    - name: install tools
       run: make tools
 
     - name: sanity-check
@@ -38,4 +38,3 @@ jobs:
         make lint
         make vet
         make test
-
