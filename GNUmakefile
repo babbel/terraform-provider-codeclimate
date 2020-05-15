@@ -43,4 +43,4 @@ vet:
 		exit 1; \
 	fi
 
-.PHONY: build build-darwin build-lint fmt fmtcheck lint test testacc tools vet
+.PHONY: build build-darwin build-linux fmt fmtcheck lint test testacc tools vet
