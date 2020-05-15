@@ -14,25 +14,16 @@ Requirements
 
 Building The Provider
 ---------------------
-Clone repository to: `$GOPATH/src/github.com/babbel/terraform-provider-codeclimate`
+Build for linux (default) or darwin with make.
 
 ```sh
-$ mkdir -p $GOPATH/src/github.com/babbel; cd $GOPATH/src/github.com/babbel
-$ git clone git@github.com:babbel/terraform-provider-codeclimate
-```
-
-Enter the provider directory and build the provider
-
-```sh
-$ cd $GOPATH/src/github.com/babbel/terraform-provider-codeclimate
-$ make build
+make build
 ```
 
 Using the provider
 ----------------------
 
-Currently the provider supports just Repository retrieval, based on the repository name.
-It is used then as a data source.
+Currently the provider supports just retreaving the repository as data source.
 
 ```hcl
 provider "codeclimate" {
@@ -48,15 +39,6 @@ Developing the Provider
 ---------------------------
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.13.x+ is *required*). This provider works using Go Modules.
-
-To compile the provider, run `go build -o terraform-provider-codeclimate`. This will build the provider and put the provider binary in the current directory.
-
-```sh
-$ make bin
-...
-$ terraform-provider-codeclimate
-...
-```
 
 In order to test the provider, you can simply run `make test`.
 
