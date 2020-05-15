@@ -36,7 +36,6 @@ jobs:
 
     - name: sanity-check
       run: |
-        make fmt
         make lint
         make vet
         make test
