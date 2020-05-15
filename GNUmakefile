@@ -1,7 +1,5 @@
 TEST?=$$(go list ./... |grep -v 'vendor')
 GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
-WEBSITE_REPO=github.com/hashicorp/terraform-website
-PKG_NAME=github
 
 default: build
 
@@ -35,14 +33,6 @@ test: fmtcheck
 testacc: fmtcheck
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
-test-compile:
-	@if [ "$(TEST)" = "./..." ]; then \
-		echo "ERROR: Set TEST to a specific package. For example,"; \
-		echo "  make test-compile TEST=./$(PKG_NAME)"; \
-		exit 1; \
-	fi
-	go test -i $(TEST) $(TESTARGS)
-
 vet:
 	@echo "go vet ."
 	@go vet $$(go list ./... | grep -v vendor/) ; if [ $$? -eq 1 ]; then \
@@ -52,4 +42,4 @@ vet:
 		exit 1; \
 	fi
 
-.PHONY: build build-darwin build-linux fmt fmtcheck lint test test-compile testacc tools vet
+.PHONY: build build-darwin build-linux fmt fmtcheck lint test testacc tools vet
