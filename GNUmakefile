@@ -4,7 +4,8 @@ GOFMT_FILES?=$$(find . -name '*.go' |grep -v vendor)
 default: build
 
 tools:
-	GO111MODULE=on go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.24.0
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.24.0
+	./bin/golangci-lint --version
 
 build-darwin: fmtcheck
 	GOOS=darwin GOARCH=amd64 go build
@@ -23,7 +24,7 @@ fmtcheck:
 
 lint:
 	@echo "==> Checking source code against linters..."
-	golangci-lint run ./...
+	./bin/golangci-lint run ./...
 
 test: fmtcheck
 	go test -i $(TEST) || exit 1
