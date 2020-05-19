@@ -1,9 +1,10 @@
-# Create a new GitHub release on pushed tag stating with 'v'.
-# Run tests, build and uploads binaries.
+# Run tests. If triggered by a tag also create a new GitHub release and upload files
 
-name: Release
+name: Test and Release
 
 on:
+  pull_request:
+    branches: [ master ]
   push:
     tags:
     - 'v*'
@@ -44,6 +45,7 @@ jobs:
   build:
     name: Build and Release
     needs: test
+    if: startsWith( github.event.ref, 'refs/tags/v' )
     runs-on: ubuntu-latest
     steps:
 
