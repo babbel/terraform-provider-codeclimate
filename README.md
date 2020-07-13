@@ -3,7 +3,6 @@ Terraform CodeClimate Provider
 
 - Website: https://www.terraform.io
 - [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
-- [![Build Status](https://travis-ci.org/babbel/terraform-provider-codeclimate.svg?branch=master)](https://travis-ci.org/babbel/terraform-provider-codeclimate)
 - Mailing list: [Google Groups](http://groups.google.com/group/terraform-tool)
 
 Requirements
