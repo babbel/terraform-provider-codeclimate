@@ -18,7 +18,8 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"codeclimate_repository": dataSourceRepository(),
+			"codeclimate_repository":   dataSourceRepository(),
+			"codeclimate_organization": dataSourceOrganization(),
 		},
 		ConfigureFunc: configureProvider,
 	}
