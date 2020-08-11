@@ -2,6 +2,7 @@ package codeclimateclient
 
 import (
 	"encoding/json"
+	"net/http"
 )
 
 type Organization struct {
@@ -21,7 +22,7 @@ type readOrganizationsResponse struct {
 func (client *Client) GetOrganization(organizationName string) (*Organization, error) {
 	var organizationsData readOrganizationsResponse
 
-	data, err := client.makeRequest("orgs")
+	data, err := client.makeRequest(http.MethodGet, "orgs", nil)
 
 	if err != nil {
 		return nil, err

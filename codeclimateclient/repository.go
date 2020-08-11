@@ -3,6 +3,7 @@ package codeclimateclient
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 )
 
 type Repository struct {
@@ -24,7 +25,7 @@ type readRepositoryResponse struct {
 func (client *Client) GetRepository(repositorySlug string) (*Repository, error) {
 	var repositoryData readRepositoryResponse
 
-	data, err := client.makeRequest(fmt.Sprintf("repos?github_slug=%s", repositorySlug))
+	data, err := client.makeRequest(http.MethodGet, fmt.Sprintf("repos?github_slug=%s", repositorySlug), nil)
 
 	if err != nil {
 		return nil, err
