@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 type Repository struct {
@@ -51,4 +52,34 @@ func (client *Client) GetRepository(repositorySlug string) (*Repository, error) 
 	}
 
 	return repository, nil
+}
+
+func (client *Client) CreateOrganizationRepository(organizationID string, url string) (*Repository, error) {
+	var repositoryData readRepositoryResponse
+
+	payload := fmt.Sprintf(`
+		{
+			"data": {
+				"type": "repos",
+				"attributes": {
+					"url": "%s"
+				}
+			}
+		}
+	`, url)
+	data, err := client.makeRequest(http.MethodPost, fmt.Sprintf("orgs/%s/repos", organizationID), strings.NewReader(payload))
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(data, &repositoryData)
+	if err != nil {
+		return nil, err
+	}
+	repository := &Repository{
+		Id:             repositoryData.Data[0].ID,
+		TestReporterId: repositoryData.Data[0].Attributes.TestReporterID,
+	}
+
+	return repository, nil
+
 }
