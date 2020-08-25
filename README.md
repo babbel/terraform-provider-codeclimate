@@ -34,6 +34,37 @@ data "codeclimate_repository" "test" {
 }
 ```
 
+Get organization information
+
+```hcl
+provider "codeclimate" {
+  api_key = "${var.api_key}"
+}
+
+data "codeclimate_organization" "babbel" {
+  name = "babbel"
+}
+```
+
+Create codeclimate repository 
+
+```hcl
+provider "codeclimate" {
+  api_key = "${var.api_key}"
+}
+
+data "codeclimate_organization" "babbel" {
+  name = "babbel"
+}
+
+resource "codeclimate_repository" "codeclimate_terraform_test" {
+
+  repository_url  = "https://github.com/babbel/codeclimate_terraform_test"
+  organization_id = data.codeclimate_organization.babbel.id
+}
+
+```
+
 Developing the Provider
 ---------------------------
 
