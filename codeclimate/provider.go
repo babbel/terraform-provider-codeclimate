@@ -1,6 +1,7 @@
 package codeclimate
 
 import (
+	"fmt"
 	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
@@ -21,11 +22,15 @@ func Provider() terraform.ResourceProvider {
 			"codeclimate_repository":   dataSourceRepository(),
 			"codeclimate_organization": dataSourceOrganization(),
 		},
+		ResourcesMap: map[string]*schema.Resource{
+			"codeclimate_repository": resourceRepository(),
+		},
 		ConfigureFunc: configureProvider,
 	}
 }
 
 func configureProvider(d *schema.ResourceData) (interface{}, error) {
+	fmt.Print("DEBUG PROVIDER ----------- Creating codeclimate client")
 	client := codeclimateclient.Client{
 		ApiKey:  d.Get("api_key").(string),
 		BaseUrl: codeClimateApiHost,

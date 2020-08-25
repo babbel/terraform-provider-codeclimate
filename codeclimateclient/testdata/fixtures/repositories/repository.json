@@ -12,7 +12,7 @@
         "diff_coverage_enforced": true,
         "diff_coverage_threshold": 50,
         "enable_notifications": true,
-        "github_slug": "lessonnine/testarepo",
+        "github_slug": "testorg/testarepo",
         "human_name": "testarepo",
         "last_activity_at": "2019-04-24T15:14:09.719Z",
         "test_reporter_id": "0c89092bc2c088d667612ddd1a992ec62f643ded331f40783bcf6b847561234d",

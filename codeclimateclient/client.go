@@ -23,6 +23,7 @@ func (c *Client) makeRequest(method string, path string, payload io.Reader) ([]b
 	}
 
 	req.Header.Add("Accept", "application/vnd.api+json")
+	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Authorization", fmt.Sprintf("Token token=%s", c.ApiKey))
 
 	resp, err := client.Do(req)
