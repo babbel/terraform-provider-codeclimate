@@ -13,7 +13,7 @@ func resourceRepository() *schema.Resource {
 		Delete: resourceRepositoryDelete,
 
 		Schema: map[string]*schema.Schema{
-			"repository_slug": {
+			"codeclimate_id": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -32,6 +32,9 @@ func resourceRepository() *schema.Resource {
 				ForceNew: true,
 			},
 		},
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 	}
 }
 
@@ -40,7 +43,7 @@ func resourceRepositoryDelete(data *schema.ResourceData, i interface{}) error {
 }
 
 func resourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
-	repositorySlug := d.Get("repository_slug").(string)
+	repositorySlug := d.Id()
 
 	c := client.(*codeclimateclient.Client)
 	repository, err := c.GetRepository(repositorySlug)
@@ -48,8 +51,10 @@ func resourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 		return err
 	}
 
-	d.SetId(repository.Id)
+	d.SetId(repositorySlug)
 	err = d.Set("test_reporter_id", repository.TestReporterId)
+	err = d.Set("codeclimate_id", repository.Id)
+
 	return err
 }
 
@@ -64,12 +69,12 @@ func resourceRepositoryCreateForOrganization(d *schema.ResourceData, client inte
 		return err
 	}
 
-	d.SetId(repository.Id)
+	d.SetId(repository.GithubSlug)
 	err = d.Set("test_reporter_id", repository.TestReporterId)
 	if err != nil {
 		return err
 	}
-	err = d.Set("repository_slug", repository.GithubSlug)
+	err = d.Set("codeclimate_id", repository.Id)
 
 	return err
 }

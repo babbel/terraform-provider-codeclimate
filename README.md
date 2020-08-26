@@ -65,6 +65,14 @@ resource "codeclimate_repository" "codeclimate_terraform_test" {
 
 ```
 
+
+Importing repository
+
+```
+terraform import codeclimate_repository.codeclimate_terraform_test babbel/codeclimate_terraform_test
+```
+
+
 Developing the Provider
 ---------------------------
 
