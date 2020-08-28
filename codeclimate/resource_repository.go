@@ -1,7 +1,6 @@
 package codeclimate
 
 import (
-	"fmt"
 	"github.com/babbel/terraform-provider-codeclimate/codeclimateclient"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -38,10 +37,6 @@ func resourceRepository() *schema.Resource {
 	}
 }
 
-func resourceRepositoryDelete(data *schema.ResourceData, i interface{}) error {
-	return fmt.Errorf("delete repository is not supported yet")
-}
-
 func resourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 	repositorySlug := d.Id()
 
@@ -75,6 +70,20 @@ func resourceRepositoryCreateForOrganization(d *schema.ResourceData, client inte
 		return err
 	}
 	err = d.Set("codeclimate_id", repository.Id)
+
+	return err
+}
+
+func resourceRepositoryDelete(d *schema.ResourceData, client interface{}) error {
+	repositoryID := d.Get("codeclimate_id").(string)
+
+	c := client.(*codeclimateclient.Client)
+	err := c.DeleteOrganizationRepository(repositoryID)
+	if err != nil {
+		return err
+	}
+
+	d.SetId("")
 
 	return err
 }

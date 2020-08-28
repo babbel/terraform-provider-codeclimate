@@ -112,6 +112,16 @@ func (client *Client) CreateOrganizationRepository(organizationID string, url st
 
 }
 
+func (client *Client) DeleteOrganizationRepository(repositoryID string) error {
+	_, err := client.makeRequest(http.MethodDelete, fmt.Sprintf("repos/%s", repositoryID), nil)
+
+	if err != nil {
+		return fmt.Errorf("The repository couldn't be deleted: %s", err)
+	}
+
+	return nil
+}
+
 func handleErrorResponse(data []byte) error {
 	var errorResponse errorResponse
 	err := json.Unmarshal(data, &errorResponse)

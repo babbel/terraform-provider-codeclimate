@@ -11,6 +11,7 @@ const (
 	expectedTestReporterID = "0c89092bc2c088d667612ddd1a992ec62f643ded331f40783bcf6b847561234d"
 	organizationID         = "testorg"
 	repositoryUrl          = "https://github.com/testorg/testarepo"
+	repositoryID           = "696a76232df2736347000001"
 )
 
 func TestClient_GetRepository(t *testing.T) {
@@ -19,7 +20,7 @@ func TestClient_GetRepository(t *testing.T) {
 
 	mux.HandleFunc("/repos", func(w http.ResponseWriter, r *http.Request) {
 		if r.FormValue("github_slug") != repositorySlug {
-			t.Fatal(fmt.Errorf("received slug doesn match `%s`", repositorySlug))
+			t.Fatal(fmt.Errorf("received slug doesnt match `%s`", repositorySlug))
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -65,4 +66,19 @@ func TestClient_CreateOrganizationRepository(t *testing.T) {
 	if repository.GithubSlug != repositorySlug {
 		t.Errorf("Expected github slug to be '%s', got: '%s'", repositorySlug, repository.GithubSlug)
 	}
+}
+func TestClient_DeleteOrganizationRepository(t *testing.T) {
+	teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("repos/%s", repositoryID), func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	err := client.DeleteOrganizationRepository(repositoryID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
 }
