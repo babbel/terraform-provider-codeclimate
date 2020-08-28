@@ -48,8 +48,10 @@ func resourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 
 	d.SetId(repositorySlug)
 	err = d.Set("test_reporter_id", repository.TestReporterId)
+	if err != nil {
+		return err
+	}
 	err = d.Set("codeclimate_id", repository.Id)
-
 	return err
 }
 
