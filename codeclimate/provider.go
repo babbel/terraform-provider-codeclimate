@@ -14,6 +14,7 @@ func Provider() terraform.ResourceProvider {
 			"api_key": {
 				Type:        schema.TypeString,
 				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("CODECLIMATE_TOKEN", nil),
 				Description: "Token for the CodeClimate API.",
 			},
 		},
