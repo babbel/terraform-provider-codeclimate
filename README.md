@@ -46,7 +46,7 @@ data "codeclimate_organization" "babbel" {
 }
 ```
 
-Create codeclimate repository 
+Create codeclimate repository
 
 ```hcl
 provider "codeclimate" {
