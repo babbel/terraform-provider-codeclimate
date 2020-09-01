@@ -58,11 +58,9 @@ data "codeclimate_organization" "babbel" {
 }
 
 resource "codeclimate_repository" "codeclimate_terraform_test" {
-
   repository_url  = "https://github.com/babbel/codeclimate_terraform_test"
   organization_id = data.codeclimate_organization.babbel.id
 }
-
 ```
 
 
