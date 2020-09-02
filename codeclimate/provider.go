@@ -14,12 +14,18 @@ func Provider() terraform.ResourceProvider {
 			"api_key": {
 				Type:        schema.TypeString,
 				Required:    true,
+				DefaultFunc: schema.EnvDefaultFunc("CODECLIMATE_TOKEN", nil),
 				Description: "Token for the CodeClimate API.",
 			},
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"codeclimate_repository": dataSourceRepository(),
+			"codeclimate_repository":   dataSourceRepository(),
+			"codeclimate_organization": dataSourceOrganization(),
 		},
+		ResourcesMap: map[string]*schema.Resource{
+			"codeclimate_repository": resourceRepository(),
+		},
+
 		ConfigureFunc: configureProvider,
 	}
 }

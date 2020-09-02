@@ -7,17 +7,20 @@ import (
 )
 
 const (
-	repositorySlug         = "lessonnine/testarepo"
-	expectedTestReporterId = "0c89092bc2c088d667612ddd1a992ec62f643ded331f40783bcf6b847561234d"
+	repositorySlug         = "testorg/testarepo"
+	expectedTestReporterID = "0c89092bc2c088d667612ddd1a992ec62f643ded331f40783bcf6b847561234d"
+	organizationID         = "testorg"
+	repositoryUrl          = "https://github.com/testorg/testarepo"
+	repositoryID           = "696a76232df2736347000001"
 )
 
-func TestGetId(t *testing.T) {
+func TestClient_GetRepository(t *testing.T) {
 	teardown := setup()
 	defer teardown()
 
 	mux.HandleFunc("/repos", func(w http.ResponseWriter, r *http.Request) {
 		if r.FormValue("github_slug") != repositorySlug {
-			t.Fatal(fmt.Errorf("received slug doesn match `%s`", repositorySlug))
+			t.Fatal(fmt.Errorf("received slug doesnt match `%s`", repositorySlug))
 		}
 
 		w.Header().Set("Content-Type", "application/json")
@@ -31,7 +34,51 @@ func TestGetId(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if repository.TestReporterId != expectedTestReporterId {
-		t.Errorf("Expected test_reporter_id to be '%s', got: '%s'", expectedTestReporterId, repository.TestReporterId)
+	if repository.TestReporterId != expectedTestReporterID {
+		t.Errorf("Expected test_reporter_id to be '%s', got: '%s'", expectedTestReporterID, repository.TestReporterId)
 	}
+
+	if repository.GithubSlug != repositorySlug {
+		t.Errorf("Expected github slug to be '%s', got: '%s'", repositorySlug, repository.GithubSlug)
+	}
+}
+
+func TestClient_CreateOrganizationRepository(t *testing.T) {
+	teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("/orgs/%s/repos", organizationID), func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		fmt.Fprint(w, getFixture("repositories/create_repository_response.json"))
+	})
+
+	repository, err := client.CreateOrganizationRepository(organizationID, repositoryUrl)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if repository.TestReporterId != expectedTestReporterID {
+		t.Errorf("Expected test_reporter_id to be '%s', got: '%s'", expectedTestReporterID, repository.TestReporterId)
+	}
+
+	if repository.GithubSlug != repositorySlug {
+		t.Errorf("Expected github slug to be '%s', got: '%s'", repositorySlug, repository.GithubSlug)
+	}
+}
+func TestClient_DeleteOrganizationRepository(t *testing.T) {
+	teardown := setup()
+	defer teardown()
+
+	mux.HandleFunc(fmt.Sprintf("repos/%s", repositoryID), func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
+
+	err := client.DeleteOrganizationRepository(repositoryID)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
 }
