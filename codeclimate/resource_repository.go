@@ -52,6 +52,14 @@ func resourceRepositoryRead(d *schema.ResourceData, client interface{}) error {
 		return err
 	}
 	err = d.Set("codeclimate_id", repository.Id)
+	if err != nil {
+		return err
+	}
+	err = d.Set("repository_url", repository.RepositoryURL)
+	if err != nil {
+		return err
+	}
+	err = d.Set("organization_id", repository.Organization)
 	return err
 }
 

@@ -11,6 +11,8 @@ type Repository struct {
 	Id             string
 	TestReporterId string
 	GithubSlug     string
+	Organization   string
+	RepositoryURL  string
 }
 
 // The structure describes just what we need from the response.
@@ -21,7 +23,15 @@ type readRepositoriesResponse struct {
 		Attributes struct {
 			TestReporterID string `json:"test_reporter_id"`
 			GithubSlug     string `json:"github_slug"`
+			VCSHost        string `json:"vcs_host"`
 		} `json:"attributes"`
+		Relationships struct {
+			Account struct {
+				Data struct {
+					ID string `json:"id"`
+				} `json:"data"`
+			} `json:"account"`
+		} `json:"relationships"`
 	} `json:"data"`
 }
 
@@ -69,6 +79,8 @@ func (client *Client) GetRepository(repositorySlug string) (*Repository, error) 
 		Id:             repositoryData.Data[0].ID,
 		TestReporterId: repositoryData.Data[0].Attributes.TestReporterID,
 		GithubSlug:     repositoryData.Data[0].Attributes.GithubSlug,
+		Organization:   repositoryData.Data[0].Relationships.Account.Data.ID,
+		RepositoryURL:  repositoryData.Data[0].Attributes.VCSHost + "/" + repositoryData.Data[0].Attributes.GithubSlug,
 	}
 
 	return repository, nil

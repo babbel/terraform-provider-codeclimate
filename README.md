@@ -26,7 +26,7 @@ Currently the provider supports just retreaving the repository as data source.
 
 ```hcl
 provider "codeclimate" {
-  api_key = "${var.api_key}"
+  api_key = "${var.api_key}"        # Will fallback to CODECLIMATE_TOKEN environment variable if not explicitly specified.
 }
 
 data "codeclimate_repository" "test" {

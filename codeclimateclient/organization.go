@@ -2,6 +2,7 @@ package codeclimateclient
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -42,5 +43,5 @@ func (client *Client) GetOrganization(organizationName string) (*Organization, e
 			return organization, nil
 		}
 	}
-	return nil, nil
+	return nil, fmt.Errorf("The Organization could not be found")
 }
